@@ -93,7 +93,6 @@ function createChessBoard() {
   pieces = getInitialBoard();
 
   for (let piece of pieces) {
-    //💬💬💬
     addImage(
       table123.rows[piece.row].cells[piece.col],
       piece.player,
