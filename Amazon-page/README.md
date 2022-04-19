@@ -1,8 +1,3 @@
 # amazon-page1
 
-amazon practice-
-this is my readme file to evreyone
-where
-123456789
-dfadsf
-123456
+hi! this is a [link](https://github.com/Guy-Lazarof/amazon-page.git) to all the commint that i made (and saved on other repo)
