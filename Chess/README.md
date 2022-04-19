@@ -1,4 +1,3 @@
 # chess-table-only-js
 
-Hi that's my chass table that i made only by js orders
-enjoy!
+Hi! this is a [link](https://github.com/Guy-Lazarof/chess-table-only-js.git) to all the commint that i made (and saved on other repo)
