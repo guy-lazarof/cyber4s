@@ -16,27 +16,25 @@ function createChessBoard() {
 
   function getInitialBoard() {
     let result = [];
-    result.push(new piece(0, 0, "rook", WHITE_PLAYER));
-    result.push(new piece(0, 1, "knight", WHITE_PLAYER));
-    result.push(new piece(0, 2, "bishop", WHITE_PLAYER));
-    result.push(new piece(0, 3, "king", WHITE_PLAYER));
-    result.push(new piece(0, 4, "queen", WHITE_PLAYER));
-    result.push(new piece(0, 5, "bishop", WHITE_PLAYER));
-    result.push(new piece(0, 6, "knight", WHITE_PLAYER));
-    result.push(new piece(0, 7, "rook", WHITE_PLAYER));
-    result.push(new piece(7, 0, "rook", DARK_PLAYER));
-    result.push(new piece(7, 1, "knight", DARK_PLAYER));
-    result.push(new piece(7, 2, "bishop", DARK_PLAYER));
-    result.push(new piece(7, 3, "king", DARK_PLAYER));
-    result.push(new piece(7, 4, "queen", DARK_PLAYER));
-    result.push(new piece(7, 5, "bishop", DARK_PLAYER));
-    result.push(new piece(7, 6, "knight", DARK_PLAYER));
-    result.push(new piece(7, 7, "rook", DARK_PLAYER));
+
+    addPieces(result, 7, DARK_PLAYER);
+    addPieces(result, 0, WHITE_PLAYER);
+
     for (let i = 0; i < BOARD_SIZE; i++) {
       result.push(new piece(1, i, "pawn", WHITE_PLAYER));
       result.push(new piece(6, i, "pawn", DARK_PLAYER));
     }
     return result;
+  }
+  function addPieces(result, row, player) {
+    result.push(new piece(row, 0, "rook", player));
+    result.push(new piece(row, 1, "knight", player));
+    result.push(new piece(row, 2, "bishop", player));
+    result.push(new piece(row, 3, "king", player));
+    result.push(new piece(row, 4, "queen", player));
+    result.push(new piece(row, 5, "bishop", player));
+    result.push(new piece(row, 6, "knight", player));
+    result.push(new piece(row, 7, "rook", player));
   }
 
   function addImage(cell, player, name) {
@@ -80,7 +78,6 @@ function createChessBoard() {
     const row = table123.insertRow();
     for (let j = 0; j < BOARD_SIZE; j++) {
       const cell = row.insertCell();
-      cell.id = "cell-" + i.toString() + "_" + j.toString();
       if ((i + j) % 2 === 0) {
         cell.className = "light-cell";
       } else {
@@ -91,14 +88,13 @@ function createChessBoard() {
   }
 
   pieces = getInitialBoard();
-
+  console.log(pieces);
   for (let piece of pieces) {
     addImage(
       table123.rows[piece.row].cells[piece.col],
       piece.player,
       piece.type
     );
-    console.log(piece);
   }
 }
 
