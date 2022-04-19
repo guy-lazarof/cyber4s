@@ -1,3 +1,2 @@
 # cyber4s
-Hi this is my [link](https://github.com/Guy-Lazarof/wikipedia-page.git) to the wikipedia-page repo.
-this is my [link](https://github.com/Guy-Lazarof/amazon-page.git) to the amazon page repo
+Hi this is my cyber4s repo, on previous project i add a link to the original repo so you can see my commits!
