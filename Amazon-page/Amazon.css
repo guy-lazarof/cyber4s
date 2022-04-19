@@ -1,0 +1,11 @@
+h1 {
+  font-size: 40px;
+}
+.center {
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+.size {
+  font-size: 25px;
+}
