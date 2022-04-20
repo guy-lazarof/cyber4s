@@ -121,7 +121,6 @@ function addImage(cell, player, name) {
 }
 
 function onCellClick(event, row, col) {
-  // console.log(event);
   console.log(row);
   console.log(col);
   for (let i = 0; i < BOARD_SIZE; i++) {
