@@ -2,14 +2,15 @@
   text-align: center;
   text-decoration: underline;
 }
-.table1 {
+.table {
   margin: 0 auto;
   margin-top: 100px;
   border: 70px solid rgb(183, 104, 75);
   /* border-collapse: collapse; */
 }
 tr {
-  margin: 0px;
+  /* width: 70px; */
+  margin: 10px;
   border: 1px solid black;
 }
 td {
@@ -34,4 +35,7 @@ img {
 } */
 .selected {
   background-color: rgb(197, 197, 83);
+}
+.possible-move {
+  background-color: rgb(211, 163, 67);
 }
