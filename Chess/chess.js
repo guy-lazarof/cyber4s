@@ -91,16 +91,21 @@ class Piece {
     }
     return result;
   }
+  getKnightRelativeMoves() {
+    let result = [];
+    result.push([1, -2]);
+    result.push([2, -1]);
+    result.push([2, 1]);
+    result.push([1, 2]);
+    result.push([-1, 2]);
+    result.push([-2, 1]);
+    result.push([-2, -1]);
+    result.push([-1, -2]);
+
+    return result;
+  }
   getKingRelativeMoves() {
     let result = [];
-    // result.push([-1, -1]);
-    // result.push([-1, 0]);
-    // result.push([-1, 1]);
-    // result.push([0, -1]);
-    // result.push([0, 1]);
-    // result.push([1, -1]);
-    // result.push([1, 0]);
-    // result.push([1, 1]);
     for (let row = -1; row <= 1; row++) {
       for (let col = -1; col <= 1; col++) {
         if (!(row === 0 && col === 0)) {
@@ -132,19 +137,6 @@ class Piece {
       result.push([0, i]);
       result.push([0, -i]);
     }
-    return result;
-  }
-  getKnightRelativeMoves() {
-    let result = [];
-    result.push([1, -2]);
-    result.push([2, -1]);
-    result.push([2, 1]);
-    result.push([1, 2]);
-    result.push([-1, 2]);
-    result.push([-2, 1]);
-    result.push([-2, -1]);
-    result.push([-1, -2]);
-
     return result;
   }
 }
@@ -200,6 +192,7 @@ function onCellClick(event, row, col) {
     }
   }
   const piece = boardData.getPiece(row, col);
+  console.log(piece);
   if (piece !== undefined) {
     let possibleMoves = piece.getPossibleMoves();
     for (let possibleMove of possibleMoves) {
@@ -207,7 +200,7 @@ function onCellClick(event, row, col) {
       cell.classList.add("possible-move");
     }
   } else {
-    console.log("undifind");
+    console.log("undefined");
   }
   // Show possible moves
   for (let piece of pieces) {
@@ -216,7 +209,11 @@ function onCellClick(event, row, col) {
       let possibleMoves = piece.getPossibleMoves();
       for (let possibleMove of possibleMoves) {
         const cell = table.rows[possibleMove[0]].cells[possibleMove[1]];
-        cell.classList.add("possible-move");
+        if (cell !== undefined) {
+          cell.classList.add("possible-move");
+        } else if (cell === undefined) {
+          cell.classList.add("hi");
+        }
       }
     }
   }
@@ -253,8 +250,8 @@ function createChessBoard() {
     }
   }
 
-  // Create list of pieces (32 total)
   boardData = new BoardData(getInitialPieces());
+  console.log(boardData);
   pieces = getInitialPieces();
   console.log(pieces);
 
@@ -266,15 +263,16 @@ function createChessBoard() {
 }
 
 window.addEventListener("load", createChessBoard);
+// this.board = new Array();
 
-this.board = new Array();
+// for (let i = 0; i < this.boardSize; i++) {
+//   this.board[i] = new Array();
+//   for (let j = 0; j < this.boardSize; j++) {
+//     this.board[i][j] = SquareState.EMPTY;
+//   }
+// }
+// Create list of pieces (32 total)
 
-for (let i = 0; i < this.boardSize; i++) {
-  this.board[i] = new Array();
-  for (let j = 0; j < this.boardSize; j++) {
-    this.board[i][j] = SquareState.EMPTY;
-  }
-}
 // let guys = [
 //   [1, 6],
 //   [2, 3, 9],
