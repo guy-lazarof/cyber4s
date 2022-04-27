@@ -235,7 +235,7 @@ function showMovesForPiece(row, col) {
     }
   }
 
-  // מחזיר את הכלי עם הרו והקולום הספיציפי שלחצנו עליו
+  // בודק אם מה שלחצנו עליו הוא שחקן (אם כן מחזיר את המהלכים שלות ואם לא אז צובע את מה שלחצנו עליו בלבד)
   const piece = boardData.getPiece(row, col);
   if (piece !== undefined) {
     let possibleMoves = piece.getPossibleMoves(boardData);
@@ -259,13 +259,10 @@ function tryMove(piece, row, col) {
     if (possibleMove[0] === row && possibleMove[1] === col) {
       //בודק לי אם לחצתי על אחת מהאפשרויות
       // There is a legal move
-      console.log(boardData.pieces);
       boardData.removePiece(row, col);
-      console.log(boardData.pieces);
       piece.row = row;
       piece.col = col;
 
-      console.log(boardData.pieces);
       return true;
     }
   }
@@ -289,11 +286,6 @@ function onCellClick(event, row, col) {
     if (tryMove(selectedPiece, row, col)) {
       selectedPiece = undefined;
       // Recreate whole board - this is not efficient, but doesn't affect user experience
-      console.log(boardData.pieces);
-      const KING = { a: 1 };
-      const K = KING;
-      KING.a = 5;
-      // console.log(K, KING);
       createChessBoard(boardData);
     } else {
       showMovesForPiece(row, col); //ברגע שלחצתי על שחקן אחר הוא מראה לי את המהלכים שלו
