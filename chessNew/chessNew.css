@@ -22,14 +22,18 @@ td {
 }
 .dark-cell {
   background-color: rgb(147, 44, 7);
+  user-select: none;
 }
 .light-cell {
   background-color: rgba(00, 00, 00, 0.2);
+  user-select: none;
 }
 img {
   margin: auto;
   display: block;
   height: 70px;
+
+  -webkit-user-drag: none;
 }
 /* #cell-5_5 {
   background-color: blue;
