@@ -4,6 +4,7 @@ class BoardManger {
     this.boardSize = boardSize;
     this.selectedPieceID = undefined;
     this.PossibleMoves = undefined;
+    this.PossibleMovesByID = undefined;
   }
   initBoard() {
     const table = document.createElement("table");
@@ -35,9 +36,18 @@ class BoardManger {
       document.getElementById(cellID).classList.add(`selected`);
       this.selectedPieceID = cellID;
     }
-    this.PossibleMoves = undefined;
     this.PossibleMoves = this.Board[row][col].getPossibleMoves();
     console.log(this.PossibleMoves);
+
+    //possible moves
+    this.PossibleMovesByID = this.Board[row][col].Trans_To_Id_Cells();
+    for (let i = 0; i < this.PossibleMovesByID.length; i++) {
+      document
+        .getElementById(this.PossibleMovesByID[i])
+        .classList.add(`possible-move`);
+    }
+    console.log(this.Board[row][col].Trans_To_Id_Cells());
+
     // if (this.PossibleMoves !== undefined) {
     //   document
     //     .getElementById(this.PossibleMoves)
