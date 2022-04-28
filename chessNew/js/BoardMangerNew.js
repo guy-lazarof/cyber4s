@@ -3,6 +3,7 @@ class BoardManger {
     this.Board = [];
     this.boardSize = boardSize;
     this.selectedPieceID = undefined;
+    this.PossibleMoves = undefined;
   }
   initBoard() {
     const table = document.createElement("table");
@@ -34,7 +35,22 @@ class BoardManger {
       document.getElementById(cellID).classList.add(`selected`);
       this.selectedPieceID = cellID;
     }
+    this.PossibleMoves = undefined;
+    this.PossibleMoves = this.Board[row][col].getPossibleMoves();
+    console.log(this.PossibleMoves);
+    // if (this.PossibleMoves !== undefined) {
+    //   document
+    //     .getElementById(this.PossibleMoves)
+    //     .classList.remove(`possible-move`);
+    // }
+
+    // for (let i = 0; i < this.PossibleMoves.length; i++) {
+    //   document
+    //     .getElementById(this.PossibleMoves[i])
+    //     .classList.add(`possible-move`);
+    // }
   }
+
   initPieces() {
     this.Board = new Array(this.boardSize);
 

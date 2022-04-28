@@ -4,6 +4,7 @@ class Piece {
     this.col = col;
     this.type = type;
     this.player = player;
+    this.possibles = [];
   }
 
   createImage() {
@@ -12,14 +13,42 @@ class Piece {
     image.src = "images/" + this.player + "/" + this.type + ".png";
     document.getElementById(id).appendChild(image);
   }
-  //לצבוע רק את הpiece
-  // getInitialBoard() {
-  //   pieces = [];
-  //   for (let i = 0; i < BOARD_SIZE; i++) {
-  //     pieces.push(new Piece(0, i, PIECES[i], WHITE_PLAYER));
-  //     pieces.push(new Piece(1, i, PAWN, WHITE_PLAYER));
-  //     pieces.push(new Piece(6, i, PAWN, BLACK_PLAYER));
-  //     pieces.push(new Piece(7, i, PIECES[i], BLACK_PLAYER));
+  getPossibleMoves() {
+    this.possibles = [];
+    let filteredMoves = [];
+    if (this.type === PAWN) {
+      if (this.player === `white`) {
+        this.possibles.push([this.row + 1, this.col]);
+      } else {
+        this.possibles.push([this.row - 1, this.col]);
+      }
+    }
+    if (this.type === ROOK) {
+      for (let i = 1; i < BOARD_SIZE; i++) {
+        this.possibles.push([this.row, this.col + i]);
+        this.possibles.push([this.row + i, this.col]);
+        this.possibles.push([this.row, this.col - i]);
+        this.possibles.push([this.row - i, this.col]);
+      }
+    }
+    for (const possible of this.possibles) {
+      const absoluteRow = possible[0];
+      const absoluteCol = possible[1];
+      if (
+        absoluteRow >= 0 &&
+        absoluteRow <= 7 &&
+        absoluteCol >= 0 &&
+        absoluteCol <= 7
+      ) {
+        filteredMoves.push(possible);
+      }
+    }
+    return filteredMoves;
+  }
+
+  // idOfCells() {
+  //   for (const possible of this.possibles) {
+  //     possible;
   //   }
   // }
 }

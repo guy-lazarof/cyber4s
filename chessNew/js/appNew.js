@@ -22,6 +22,5 @@ function onLoad() {
   let boardManger = new BoardManger(BOARD_SIZE);
   boardManger.initBoard();
   boardManger.initPieces();
-  // addImage(boardManger(Board[1][1]).initPieces(), `white`, `pawn`);
 }
 window.addEventListener("load", onLoad);
