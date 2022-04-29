@@ -3,8 +3,8 @@ class BoardManger {
     this.Board = [];
     this.boardSize = boardSize;
     this.selectedPieceID = undefined;
-    this.PossibleMoves = undefined;
-    this.PossibleMovesByID = undefined;
+    this.filteredMoves = undefined; //before considering on other pieces
+    this.filteredMovesByID = undefined; //before considering on other pieces by ID
   }
   initBoard() {
     const table = document.createElement("table");
@@ -36,29 +36,24 @@ class BoardManger {
       document.getElementById(cellID).classList.add(`selected`);
       this.selectedPieceID = cellID;
     }
-    this.PossibleMoves = this.Board[row][col].getPossibleMoves();
-    console.log(this.PossibleMoves);
+    this.filteredMoves = this.Board[row][col].getPossibleMoves();
+    console.log(this.filteredMoves);
 
-    //possible moves
-    this.PossibleMovesByID = this.Board[row][col].Trans_To_Id_Cells();
-    for (let i = 0; i < this.PossibleMovesByID.length; i++) {
+    // possible moves
+    if (this.filteredMovesByID !== undefined) {
+      for (let i = 0; i < this.filteredMovesByID.length; i++) {
+        document
+          .getElementById(this.filteredMovesByID[i])
+          .classList.remove(`possible-move`);
+      }
+    }
+    this.filteredMovesByID = this.Board[row][col].Trans_To_Id_Cells();
+    for (let i = 0; i < this.filteredMovesByID.length; i++) {
       document
-        .getElementById(this.PossibleMovesByID[i])
+        .getElementById(this.filteredMovesByID[i])
         .classList.add(`possible-move`);
     }
     console.log(this.Board[row][col].Trans_To_Id_Cells());
-
-    // if (this.PossibleMoves !== undefined) {
-    //   document
-    //     .getElementById(this.PossibleMoves)
-    //     .classList.remove(`possible-move`);
-    // }
-
-    // for (let i = 0; i < this.PossibleMoves.length; i++) {
-    //   document
-    //     .getElementById(this.PossibleMoves[i])
-    //     .classList.add(`possible-move`);
-    // }
   }
 
   initPieces() {

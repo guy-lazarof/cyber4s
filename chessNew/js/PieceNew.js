@@ -4,8 +4,8 @@ class Piece {
     this.col = col;
     this.type = type;
     this.player = player;
-    this.possibles = [];
-    this.filteredMoves = [];
+    this.absoluteMoves = []; // before filter
+    this.possibleMovesOnBoard = []; //before considering on other pieces
   }
 
   createImage() {
@@ -15,64 +15,64 @@ class Piece {
     document.getElementById(id).appendChild(image);
   }
   getPossibleMoves() {
-    this.possibles = [];
-    this.filteredMoves = [];
+    this.absoluteMoves = [];
+    this.possibleMovesOnBoard = [];
     if (this.type === PAWN) {
       if (this.player === `white`) {
-        this.possibles.push([this.row + 1, this.col]);
+        this.absoluteMoves.push([this.row + 1, this.col]);
       } else {
-        this.possibles.push([this.row - 1, this.col]);
+        this.absoluteMoves.push([this.row - 1, this.col]);
       }
     }
     if (this.type === ROOK) {
       for (let i = 1; i < BOARD_SIZE; i++) {
-        this.possibles.push([this.row, this.col + i]);
-        this.possibles.push([this.row + i, this.col]);
-        this.possibles.push([this.row, this.col - i]);
-        this.possibles.push([this.row - i, this.col]);
+        this.absoluteMoves.push([this.row, this.col + i]);
+        this.absoluteMoves.push([this.row + i, this.col]);
+        this.absoluteMoves.push([this.row, this.col - i]);
+        this.absoluteMoves.push([this.row - i, this.col]);
       }
     }
     if (this.type === BISHOP) {
       for (let i = 1; i < BOARD_SIZE; i++) {
-        this.possibles.push([this.row + i, this.col + i]);
-        this.possibles.push([this.row - i, this.col - i]);
-        this.possibles.push([this.row + i, this.col - i]);
-        this.possibles.push([this.row - i, this.col + i]);
+        this.absoluteMoves.push([this.row + i, this.col + i]);
+        this.absoluteMoves.push([this.row - i, this.col - i]);
+        this.absoluteMoves.push([this.row + i, this.col - i]);
+        this.absoluteMoves.push([this.row - i, this.col + i]);
       }
     }
     if (this.type === QUEEN) {
       for (let i = 1; i < BOARD_SIZE; i++) {
-        this.possibles.push([this.row + i, this.col + i]);
-        this.possibles.push([this.row - i, this.col - i]);
-        this.possibles.push([this.row + i, this.col - i]);
-        this.possibles.push([this.row - i, this.col + i]);
-        this.possibles.push([this.row, this.col + i]);
-        this.possibles.push([this.row + i, this.col]);
-        this.possibles.push([this.row, this.col - i]);
-        this.possibles.push([this.row - i, this.col]);
+        this.absoluteMoves.push([this.row + i, this.col + i]);
+        this.absoluteMoves.push([this.row - i, this.col - i]);
+        this.absoluteMoves.push([this.row + i, this.col - i]);
+        this.absoluteMoves.push([this.row - i, this.col + i]);
+        this.absoluteMoves.push([this.row, this.col + i]);
+        this.absoluteMoves.push([this.row + i, this.col]);
+        this.absoluteMoves.push([this.row, this.col - i]);
+        this.absoluteMoves.push([this.row - i, this.col]);
       }
     }
     if (this.type === KNIGHT) {
-      this.possibles.push([this.row + 2, this.col + 1]);
-      this.possibles.push([this.row + 1, this.col + 2]);
-      this.possibles.push([this.row + 2, this.col - 1]);
-      this.possibles.push([this.row + 1, this.col - 2]);
-      this.possibles.push([this.row - 2, this.col - 1]);
-      this.possibles.push([this.row - 1, this.col - 2]);
-      this.possibles.push([this.row - 2, this.col + 1]);
-      this.possibles.push([this.row - 1, this.col + 2]);
+      this.absoluteMoves.push([this.row + 2, this.col + 1]);
+      this.absoluteMoves.push([this.row + 1, this.col + 2]);
+      this.absoluteMoves.push([this.row + 2, this.col - 1]);
+      this.absoluteMoves.push([this.row + 1, this.col - 2]);
+      this.absoluteMoves.push([this.row - 2, this.col - 1]);
+      this.absoluteMoves.push([this.row - 1, this.col - 2]);
+      this.absoluteMoves.push([this.row - 2, this.col + 1]);
+      this.absoluteMoves.push([this.row - 1, this.col + 2]);
     }
     if (this.type === KING) {
-      this.possibles.push([this.row - 1, this.col - 1]);
-      this.possibles.push([this.row - 1, this.col]);
-      this.possibles.push([this.row - 1, this.col + 1]);
-      this.possibles.push([this.row, this.col - 1]);
-      this.possibles.push([this.row, this.col + 1]);
-      this.possibles.push([this.row + 1, this.col - 1]);
-      this.possibles.push([this.row + 1, this.col]);
-      this.possibles.push([this.row + 1, this.col + 1]);
+      this.absoluteMoves.push([this.row - 1, this.col - 1]);
+      this.absoluteMoves.push([this.row - 1, this.col]);
+      this.absoluteMoves.push([this.row - 1, this.col + 1]);
+      this.absoluteMoves.push([this.row, this.col - 1]);
+      this.absoluteMoves.push([this.row, this.col + 1]);
+      this.absoluteMoves.push([this.row + 1, this.col - 1]);
+      this.absoluteMoves.push([this.row + 1, this.col]);
+      this.absoluteMoves.push([this.row + 1, this.col + 1]);
     }
-    for (const possible of this.possibles) {
+    for (const possible of this.absoluteMoves) {
       const absoluteRow = possible[0];
       const absoluteCol = possible[1];
       if (
@@ -80,15 +80,16 @@ class Piece {
         absoluteRow <= 7 &&
         absoluteCol >= 0 &&
         absoluteCol <= 7
+        // Piece.BoardManger.Board[absoluteRow][absoluteCol] !== undefined
       ) {
-        this.filteredMoves.push(possible);
+        this.possibleMovesOnBoard.push(possible);
       }
     }
-    return this.filteredMoves;
+    return this.possibleMovesOnBoard;
   }
   Trans_To_Id_Cells() {
     let result = [];
-    for (const filtered of this.filteredMoves) {
+    for (const filtered of this.possibleMovesOnBoard) {
       result.push(`${filtered[0]}_${filtered[1]}`);
     }
     return result;
