@@ -7,19 +7,11 @@ const KNIGHT = "knight";
 const BISHOP = "bishop";
 const KING = "king";
 const QUEEN = "queen";
+let boardManger = new BoardManger();
 
 const PIECES = [ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK];
-let pieces = [];
-let table;
-
-function addImage(cell, player, name) {
-  const image = document.createElement("img");
-  image.src = "images/" + player + "/" + name + ".png";
-  cell.appendChild(image);
-}
-
+// Make the function after the HTML page was loaded
 function onLoad() {
-  let boardManger = new BoardManger(BOARD_SIZE);
   boardManger.initBoard();
   boardManger.initPieces();
 }

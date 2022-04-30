@@ -165,13 +165,13 @@ class Piece {
       [1, 0],
       [1, 1],
     ];
-    for (let relativeMove of relativeMoves) {
-      let row = this.row + relativeMove[0];
-      let col = this.col + relativeMove[1];
-      if (!boardData.isPlayer(row, col, this.player)) {
-        result.push([row, col]);
-      }
-    }
+    // for (let relativeMove of relativeMoves) {
+    //   let row = this.row + relativeMove[0];
+    //   let col = this.col + relativeMove[1];
+    //   if (!boardData.isPlayer(row, col, this.player)) {
+    //     result.push([row, col]);
+    //   }
+    // }
     return result;
   }
 

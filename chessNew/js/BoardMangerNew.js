@@ -1,10 +1,10 @@
 class BoardManger {
-  constructor(boardSize) {
+  constructor() {
     this.Board = [];
-    this.boardSize = boardSize;
+    this.boardSize = BOARD_SIZE;
     this.selectedPieceID = undefined;
-    this.filteredMoves = undefined; //before considering on other pieces
     this.filteredMovesByID = undefined; //before considering on other pieces by ID
+    this.filteredMoves = []; //before considering on other pieces
   }
   initBoard() {
     const table = document.createElement("table");
@@ -24,22 +24,26 @@ class BoardManger {
       }
     }
   }
-
+  //this function get only pieces and change the color of cells that are possibles to move to
+  //TODO:filter the possible move after consider about other pieces on board (mine and my opponent)
   onPieceClick(row, col, cellID) {
+    //remove class to selected piece by ID
     if (this.selectedPieceID !== undefined) {
       document
         .getElementById(this.selectedPieceID)
         .classList.remove(`selected`);
     }
+    //add class to selected piece- by ID
 
     if (this.Board[row][col] !== undefined) {
       document.getElementById(cellID).classList.add(`selected`);
       this.selectedPieceID = cellID;
     }
+    // this.filteredMoves= the array of moves that evrey piece can do
     this.filteredMoves = this.Board[row][col].getPossibleMoves();
     console.log(this.filteredMoves);
 
-    // possible moves
+    //remove class to possible moves by ID
     if (this.filteredMovesByID !== undefined) {
       for (let i = 0; i < this.filteredMovesByID.length; i++) {
         document
@@ -47,7 +51,9 @@ class BoardManger {
           .classList.remove(`possible-move`);
       }
     }
+    // makes the possible moves array to a possible moves array by ID
     this.filteredMovesByID = this.Board[row][col].Trans_To_Id_Cells();
+    //Add class to possible moves by ID
     for (let i = 0; i < this.filteredMovesByID.length; i++) {
       document
         .getElementById(this.filteredMovesByID[i])
@@ -55,7 +61,7 @@ class BoardManger {
     }
     console.log(this.Board[row][col].Trans_To_Id_Cells());
   }
-
+  // make an two dimensional arrays
   initPieces() {
     this.Board = new Array(this.boardSize);
 
@@ -65,6 +71,8 @@ class BoardManger {
         this.Board[i][j] = undefined;
       }
     }
+    //add the init pieces to the two dimensional arrays
+
     for (let i = 0; i < BOARD_SIZE; i++) {
       this.Board[0][i] = new Piece(0, i, PIECES[i], `white`);
       this.Board[0][i].createImage();
@@ -75,8 +83,7 @@ class BoardManger {
       this.Board[6][i] = new Piece(6, i, PAWN, `black`);
       this.Board[6][i].createImage();
     }
-    // this.Board[0][0] = new Piece(0, 0, `rook`, `white`);
-    // this.Board[0][0].createImage();
+
     console.log(this.Board);
   }
 }
